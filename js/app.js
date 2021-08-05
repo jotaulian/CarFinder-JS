@@ -44,23 +44,28 @@ filtrarAuto();
 })
 //Precio Min
 minimo.addEventListener('change', e => {
-datosBusqueda.minimo = e.target.value;
+    datosBusqueda.minimo = e.target.value;
+    filtrarAuto();
 })
 //Precio Max
 maximo.addEventListener('change', e => {
-datosBusqueda.maximo = e.target.value;
+    datosBusqueda.maximo = e.target.value;
+    filtrarAuto();
 })
 // Puertas
 puertas.addEventListener('change', e => {
-datosBusqueda.puertas = e.target.value;
+    datosBusqueda.puertas = e.target.value;
+    filtrarAuto();
 })
 // Transmision
 transmision.addEventListener('change', e => {
-datosBusqueda.transmision = e.target.value;
+    datosBusqueda.transmision = e.target.value;
+    filtrarAuto();
 })
 // Color
 color.addEventListener('change', e => {
-datosBusqueda.color = e.target.value;
+    datosBusqueda.color = e.target.value;
+    filtrarAuto();
 })
 
 /* FUNCIONES */
@@ -94,7 +99,7 @@ function llenarSelect(){
 
 //Función que filtra en base a la busqueda
 function filtrarAuto(){
-const resultado = autos.filter( filtrarMarca ).filter( filtrarYear );
+const resultado = autos.filter( filtrarMarca ).filter( filtrarYear ).filter( filtrarMin ).filter( filtrarMax ).filter( filtrarPuertas ).filter( filtrarTransmision ).filter( filtrarColor );
 // console.log(resultado);
 
 mostrarAutos(resultado);
@@ -111,6 +116,41 @@ function filtrarYear(auto){
     const { year } = datosBusqueda;
     if(year){
         return auto.year === parseInt(year); // Comparamos String con String
+    }
+    return auto;
+}
+function filtrarMin(auto){
+const { minimo } = datosBusqueda;
+    if(minimo){
+        return auto.precio >= minimo;
+    }
+    return auto;
+}
+function filtrarMax(auto){
+const { maximo } = datosBusqueda;
+    if(maximo){
+        return auto.precio <= maximo;
+    }
+    return auto;
+}
+function filtrarPuertas(auto){
+    const { puertas } = datosBusqueda;
+    if(puertas){
+        return auto.puertas === parseInt(puertas);
+    }
+    return auto;
+}
+function filtrarTransmision(auto){
+    const { transmision } = datosBusqueda;
+    if(transmision){
+        return auto.transmision === transmision;
+    }
+    return auto;
+}
+function filtrarColor(auto){
+    const { color } = datosBusqueda;
+    if(color){
+        return auto.color === color;
     }
     return auto;
 }
