@@ -74,7 +74,7 @@ function mostrarAutos(autos){
     autos.forEach(auto => {
         const autoHTML = document.createElement('p');
         const {marca, modelo, year, puertas, transmision, precio, color} = auto;
-        autoHTML.textContent = `${marca} ${modelo} - Año: ${year} - ${puertas} puertas - ${transmision} - USD ${precio} - ${color}`;
+        autoHTML.textContent = `${marca} ${modelo} - Year: ${year} - ${puertas} Doors - ${transmision} - USD ${precio} - ${color}`;
 
         resultado.appendChild(autoHTML);
     });
@@ -99,10 +99,22 @@ function llenarSelect(){
 
 //Función que filtra en base a la busqueda
 function filtrarAuto(){
-const resultado = autos.filter( filtrarMarca ).filter( filtrarYear ).filter( filtrarMin ).filter( filtrarMax ).filter( filtrarPuertas ).filter( filtrarTransmision ).filter( filtrarColor );
-// console.log(resultado);
+    const resultado = autos.filter( filtrarMarca ).filter( filtrarYear ).filter( filtrarMin ).filter( filtrarMax ).filter( filtrarPuertas ).filter( filtrarTransmision ).filter( filtrarColor );
 
-mostrarAutos(resultado);
+    if(resultado.length){
+        mostrarAutos(resultado);
+    }else{
+        noResultado();
+    }
+
+}
+
+function noResultado(){
+    limpiarHTML();
+    const parrafo = document.createElement('div');
+    parrafo.classList.add('alerta', 'error');
+    parrafo.textContent = 'Lo sentimos, no tenemos autos con esas caracteristicas :(';
+    resultado.appendChild(parrafo);
 }
 
 function filtrarMarca(auto){
@@ -120,14 +132,14 @@ function filtrarYear(auto){
     return auto;
 }
 function filtrarMin(auto){
-const { minimo } = datosBusqueda;
+    const { minimo } = datosBusqueda;
     if(minimo){
         return auto.precio >= minimo;
     }
     return auto;
 }
 function filtrarMax(auto){
-const { maximo } = datosBusqueda;
+    const { maximo } = datosBusqueda;
     if(maximo){
         return auto.precio <= maximo;
     }
